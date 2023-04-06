@@ -1,11 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import RangeInput from '@/components/reusable/RangeInput';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import SliderPriceInput from './SliderPriceInput';
 
-const PriceRange = ({ min, max, price, setPrice }) => {
+const PriceRange = ({ min, max, price, setPrice, showModal }) => {
   const [value, setValue] = useState(price);
   const thumbWidth = 16;
   const timeout = useRef(null);
+  const router = useRouter();
+
+  // if router.isReady false, price not set properly
+  useEffect(() => {
+    setValue(() => price);
+  }, [price]);
 
   const onSliderChange = (val) => {
     clearTimeout(timeout.current);
@@ -19,6 +27,18 @@ const PriceRange = ({ min, max, price, setPrice }) => {
       setPrice(() => val);
     }, 500);
   };
+
+  useEffect(() => {
+    if (price[0] > 0 || price[1] < 5000) {
+      router.query['price'] = price.toString();
+      if (!showModal) {
+        router.push({
+          query: router.query,
+        });
+      }
+    }
+  }, [price]);
+  console.log({ showModal });
 
   return (
     <>

@@ -12,6 +12,7 @@ const FilterContainer = ({
   MAX_PRICE,
   price,
   setPrice,
+  showModal,
 }) => {
   // const MIN_PRICE = 0;
   // const MAX_PRICE = 5000;
@@ -42,6 +43,7 @@ const FilterContainer = ({
         max={MAX_PRICE}
         price={price}
         setPrice={setPrice}
+        showModal={showModal}
       />
       <CategoryFilter />
     </div>

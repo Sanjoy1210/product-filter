@@ -1,4 +1,6 @@
 import Modal from '@/components/reusable/Modal';
+import { useRouter } from 'next/router';
+import { GrClose } from 'react-icons/gr';
 import FilterContainer from '../FilterContainer';
 
 const FilterModal = ({
@@ -12,9 +14,17 @@ const FilterModal = ({
   MAX_PRICE,
   price,
   setPrice,
+  handleClear,
 }) => {
+  const router = useRouter();
   const handleClose = () => {
     setShowModal((prev) => !prev);
+  };
+  const handleFilter = () => {
+    handleClose();
+    router.push({
+      query: router.query,
+    });
   };
   return (
     <Modal
@@ -24,6 +34,18 @@ const FilterModal = ({
       onClose={handleClose}
       isTransparentBG={false}
     >
+      <div className="z-[700] border-b bg-white p-4 py-3 text-dark relative">
+        <button
+          className="px-3 text-lg text-zinc-900 absolute top-4"
+          onClick={handleClose}
+          type="button"
+        >
+          <span className="">
+            <GrClose />
+          </span>
+        </button>
+        <h1 className=" text-gray-700 smd:text-xl text-center">Filters</h1>
+      </div>
       {/*content*/}
       <div className="sidebar max-h-[75vh] pb-0">
         <div className=" px-6 smd:px-10 pt-4">
@@ -38,6 +60,23 @@ const FilterModal = ({
             setPrice={setPrice}
           />
         </div>
+      </div>
+      <div className="sticky bottom-0 flex justify-between border-t bg-white py-2 pr-3">
+        <div className="px-4 py-1">
+          <button
+            className="text-sm py-1 bg-primary px-5 rounded"
+            onClick={handleClear}
+          >
+            Clear
+          </button>
+        </div>
+        <button
+          type="submit"
+          className="rounded bg-black px-5 py-2 text-sm font-semibold text-white"
+          onClick={handleFilter}
+        >
+          Apply
+        </button>
       </div>
     </Modal>
   );
