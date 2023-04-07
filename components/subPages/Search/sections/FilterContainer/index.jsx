@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import CategoryFilter from '../CategoryFilter';
+import { filterOptions } from '../../utils/filterOptions';
 import MileRange from '../MileRange';
 import PriceRange from '../PriceRange';
+import SingleCategory from '../SingleCategory';
 
 const FilterContainer = ({
   MIN_MILE,
@@ -13,6 +14,8 @@ const FilterContainer = ({
   price,
   setPrice,
   showModal,
+  categories,
+  setCategories,
 }) => {
   // const MIN_PRICE = 0;
   // const MAX_PRICE = 5000;
@@ -35,9 +38,17 @@ const FilterContainer = ({
   //   });
   // }, [mile, price]);
 
+  const allCategories = Object.keys(filterOptions);
+
   return (
     <div>
-      <MileRange min={MIN_MILE} max={MAX_MILE} mile={mile} setMile={setMile} />
+      <MileRange
+        min={MIN_MILE}
+        max={MAX_MILE}
+        mile={mile}
+        setMile={setMile}
+        showModal={showModal}
+      />
       <PriceRange
         min={MIN_PRICE}
         max={MAX_PRICE}
@@ -45,7 +56,17 @@ const FilterContainer = ({
         setPrice={setPrice}
         showModal={showModal}
       />
-      <CategoryFilter />
+      {allCategories?.map((filterKey) => (
+        <SingleCategory
+          key={filterKey}
+          title={categories?.[filterKey]?.title}
+          subCategories={categories?.[filterKey]?.subCategories}
+          allCategories={allCategories}
+          categoryName={filterKey}
+          categories={categories}
+          setCategories={setCategories}
+        />
+      ))}
     </div>
   );
 };

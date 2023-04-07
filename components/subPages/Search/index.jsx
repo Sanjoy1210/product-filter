@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import FilterContainer from './FilterContainer';
-import FilterModal from './FilterModal';
+import FilterContainer from './sections/FilterContainer';
+import FilterModal from './sections/FilterModal';
+import { filterOptions } from './utils/filterOptions';
 
 const Search = () => {
   const MIN_PRICE = 0;
@@ -15,10 +16,11 @@ const Search = () => {
     ?.split(',')
     ?.map((pr) => parseInt(pr, 10));
   const [price, setPrice] = useState(queryPrice || [MIN_PRICE, MAX_PRICE]);
-  const [mile, setMile] = useState(MIN_MILE);
+  const [mile, setMile] = useState(+query?.['mile'] || MIN_MILE);
   const [isClear, setIsClear] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [categories, setCategories] = useState(filterOptions);
 
   // useEffect(() => {
   //   const queryObj = {};
@@ -35,20 +37,24 @@ const Search = () => {
   //   }
   // }, [mile, price, showModal]);
 
-  // if isClear true, then delete all the query property using loop and push it again empty object
+  // if isClear true, then delete all the query property using loop and push it again empty object - done
   // this will do in filter container
   useEffect(() => {
     if (isClear) {
-      delete router.query['price'];
+      Object.keys(router.query).forEach((q) => delete router.query[q]);
       router.push({
         query: router.query,
       });
       setPrice(() => [MIN_PRICE, MAX_PRICE]);
+      setCategories(() => filterOptions);
       setIsClear((prev) => !prev);
     } else {
       if (router.isReady) {
         if (queryPrice !== undefined) {
           setPrice(() => queryPrice);
+        }
+        if (query?.[mile] !== undefined) {
+          setMile(() => query?.[mile]);
         }
       }
     }
@@ -61,6 +67,8 @@ const Search = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  // mile is not working yet ---> tomorrow will work on it
 
   return (
     <section className="py-10">
@@ -87,6 +95,9 @@ const Search = () => {
               price={price}
               setPrice={setPrice}
               showModal={showModal}
+              categories={categories}
+              setCategories={setCategories}
+              // isClear={isClear}
             />
           </div>
           <div className="md:hidden">

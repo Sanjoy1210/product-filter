@@ -38,7 +38,6 @@ const PriceRange = ({ min, max, price, setPrice, showModal }) => {
       }
     }
   }, [price]);
-  console.log({ showModal });
 
   return (
     <div className="border-b border-b-gray-300 pt-4 pb-2">

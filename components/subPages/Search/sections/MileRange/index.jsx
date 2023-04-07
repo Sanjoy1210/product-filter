@@ -1,11 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import RangeInput from '@/components/reusable/RangeInput';
-import { useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
-const MileRange = ({ min, max, mile, setMile }) => {
+const MileRange = ({ min, max, mile, setMile, showModal }) => {
   const [value, setValue] = useState(mile);
   const [tooltipValue, setTooltipValue] = useState(0);
   const [thumbPosition, setThumbPosition] = useState(null);
   const timeout = useRef(null);
+  const router = useRouter();
 
   const onSliderChange = (e) => {
     clearTimeout(timeout.current);
@@ -16,6 +19,21 @@ const MileRange = ({ min, max, mile, setMile }) => {
       setMile(() => +e.target.value);
     }, 500);
   };
+
+  useEffect(() => {
+    setMile(() => mile);
+  }, [mile]);
+
+  useEffect(() => {
+    if (mile > 0) {
+      router.query['mile'] = mile;
+      if (!showModal) {
+        router.push({
+          query: router.query,
+        });
+      }
+    }
+  }, [mile]);
 
   const handleTooltipPosition = () => {
     if (thumbPosition === null) {
