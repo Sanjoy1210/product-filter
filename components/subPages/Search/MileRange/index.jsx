@@ -30,8 +30,8 @@ const MileRange = ({ min, max, mile, setMile }) => {
   };
 
   return (
-    <>
-      <p className="font-medium pb-10">Mile Range</p>
+    <div className="border-b border-b-gray-300 pb-2">
+      <p className="font-medium pb-10 pt-4">Mile Range</p>
       <div className="range-slider w-full relative mb-4">
         <RangeInput
           min={min}
@@ -59,7 +59,7 @@ const MileRange = ({ min, max, mile, setMile }) => {
           {tooltipValue}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

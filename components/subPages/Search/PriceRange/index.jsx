@@ -41,7 +41,7 @@ const PriceRange = ({ min, max, price, setPrice, showModal }) => {
   console.log({ showModal });
 
   return (
-    <>
+    <div className="border-b border-b-gray-300 pt-4 pb-2">
       <p className="font-medium pb-2">Price</p>
       <div className="range-slider w-full relative mb-4">
         <RangeInput
@@ -73,7 +73,7 @@ const PriceRange = ({ min, max, price, setPrice, showModal }) => {
           }}
         />
       </div>
-      <div className="mb-4 flex justify-between mt-6">
+      <div className="flex justify-between mt-6">
         <SliderPriceInput
           value={value[0]}
           min={min}
@@ -89,7 +89,7 @@ const PriceRange = ({ min, max, price, setPrice, showModal }) => {
           onChange={(e) => onSliderChange([value[0], +e.target.value])}
         />
       </div>
-    </>
+    </div>
   );
 };
 

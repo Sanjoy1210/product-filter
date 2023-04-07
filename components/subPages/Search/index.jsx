@@ -67,7 +67,7 @@ const Search = () => {
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <div className="hidden md:col-span-3 md:block">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center border-b border-b-gray-300 pb-2">
               <h1>Filter</h1>
               <button
                 className="text-sm py-1 bg-primary px-5 rounded"
