@@ -55,8 +55,6 @@ const SingleCategory = ({
         : { ...item }
     );
 
-    console.log({ tempCategories, subCategories });
-
     handleSetCategories(tempCategories);
     // setCategories((prev) => ({
     //   ...prev,
@@ -90,7 +88,6 @@ const SingleCategory = ({
     if (router.isReady) {
       if (router.query?.[categoryName]?.length > 0) {
         const qr = router.query?.[categoryName];
-        console.log({ qr: qr?.split(','), categoryName });
 
         const existItems = categories?.[categoryName]?.subCategories?.map(
           (item) =>
@@ -98,7 +95,6 @@ const SingleCategory = ({
         );
 
         handleSetCategories(existItems);
-        console.log({ existItems });
       }
     }
   }, [router.isReady, categoryName, router.query]);

@@ -46,6 +46,7 @@ const Search = () => {
         query: router.query,
       });
       setPrice(() => [MIN_PRICE, MAX_PRICE]);
+      setMile(() => MIN_MILE);
       setCategories(() => filterOptions);
       setIsClear((prev) => !prev);
     } else {
@@ -53,8 +54,8 @@ const Search = () => {
         if (queryPrice !== undefined) {
           setPrice(() => queryPrice);
         }
-        if (query?.[mile] !== undefined) {
-          setMile(() => query?.[mile]);
+        if (query?.['mile'] !== undefined) {
+          setMile(() => +query?.['mile']);
         }
       }
     }
@@ -67,8 +68,6 @@ const Search = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  // mile is not working yet ---> tomorrow will work on it
 
   return (
     <section className="py-10">

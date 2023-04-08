@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 
 const MileRange = ({ min, max, mile, setMile, showModal }) => {
   const [value, setValue] = useState(mile);
-  const [tooltipValue, setTooltipValue] = useState(0);
+  const [tooltipValue, setTooltipValue] = useState(mile);
   const [thumbPosition, setThumbPosition] = useState(null);
   const timeout = useRef(null);
   const router = useRouter();
+  const thumbRef = useRef(null);
 
   const onSliderChange = (e) => {
     clearTimeout(timeout.current);
@@ -20,9 +21,10 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
     }, 500);
   };
 
-  useEffect(() => {
-    setMile(() => mile);
-  }, [mile]);
+  // useEffect(() => {
+  //   setValue(() => mile);
+  //   setTooltipValue(() => mile);
+  // }, [mile]);
 
   useEffect(() => {
     if (mile > 0) {
@@ -33,13 +35,19 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
         });
       }
     }
+    setValue(() => mile);
+    setTooltipValue(() => mile);
   }, [mile]);
+
+  useEffect(() => {
+    setThumbPosition(thumbRef.current);
+  }, []);
 
   const handleTooltipPosition = () => {
     if (thumbPosition === null) {
       return '0px';
     }
-    const rangeWidth = thumbPosition.getBoundingClientRect().width - 20; // 20px is the width of the tooltip
+    const rangeWidth = thumbPosition?.getBoundingClientRect()?.width - 20; // 20px is the width of the tooltip
     const position = ((value - min) / (max - min)) * rangeWidth;
     const thumbOffset = 10; // 10px is half the width of the thumb
     const tooltipOffset = 10; // 10px is half the width of the tooltip
@@ -56,6 +64,7 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
           max={max}
           value={value}
           onChange={(e) => onSliderChange(e)}
+          thumbRef={thumbRef}
         />
 
         <div
