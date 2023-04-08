@@ -10,6 +10,7 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
   const timeout = useRef(null);
   const router = useRouter();
   const thumbRef = useRef(null);
+  const prevThumbRef = useRef(thumbRef.current);
 
   const onSliderChange = (e) => {
     clearTimeout(timeout.current);
@@ -41,7 +42,26 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
 
   useEffect(() => {
     setThumbPosition(thumbRef.current);
-  }, [showModal]);
+  }, [showModal, thumbRef]);
+
+  useEffect(() => {
+    let timeoutId = null;
+    const updatePosition = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (prevThumbRef.current !== thumbRef.current) {
+          setThumbPosition(thumbRef.current);
+        }
+      }, 250); // Debounce the updatePosition function by 250ms
+      prevThumbRef.current = thumbRef.current;
+      handleTooltipPosition();
+    };
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   const handleTooltipPosition = () => {
     if (thumbPosition === null) {
@@ -80,7 +100,7 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
           }}
         />
         <div
-          className="absolute z-10 px-1 -top-9 left-0 py-1 text-xs bg-primary rounded"
+          className="absolute z-10 px-1 -top-9 py-1 text-xs bg-primary rounded pointer-events-none"
           style={{ left: handleTooltipPosition() }}
         >
           {tooltipValue}

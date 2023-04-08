@@ -103,12 +103,12 @@ const SingleCategory = ({
   }, [router.isReady, categoryName, router.query]);
 
   return (
-    <div className="border-b border-b-gray-300 pb-2">
+    <div className="border-b border-b-gray-300 pb-3">
       <div
-        className="flex cursor-pointer justify-between items-center"
+        className="flex cursor-pointer justify-between items-center pt-4"
         onClick={handleItemExpand}
       >
-        <p className="font-medium py-4">{title}</p>
+        <p className="font-medium">{title}</p>
         {/* add animation later */}
         <span className="-mr-1">
           {showItem || firstFilteredCategory === categoryName ? (
@@ -119,7 +119,7 @@ const SingleCategory = ({
         </span>
       </div>
       <div
-        className={`service__modal-scroll-bar max-h-64 space-y-2 overflow-y-auto  pt-3  ${
+        className={`space-y-2 pt-4 ${
           showItem || firstFilteredCategory === categoryName
             ? 'block'
             : 'hidden'
