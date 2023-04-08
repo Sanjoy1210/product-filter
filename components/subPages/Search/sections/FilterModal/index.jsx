@@ -15,6 +15,8 @@ const FilterModal = ({
   price,
   setPrice,
   handleClear,
+  categories,
+  setCategories,
 }) => {
   const router = useRouter();
   const handleClose = () => {
@@ -47,7 +49,7 @@ const FilterModal = ({
         <h1 className=" text-gray-700 smd:text-xl text-center">Filters</h1>
       </div>
       {/*content*/}
-      <div className="sidebar max-h-[75vh] pb-0">
+      <div className="sidebar max-h-[75vh] xs:w-[350px] smd:w-[420px] pb-0">
         <div className=" px-6 smd:px-10 pt-4">
           <FilterContainer
             MIN_MILE={MIN_MILE}
@@ -58,6 +60,9 @@ const FilterModal = ({
             MAX_PRICE={MAX_PRICE}
             price={price}
             setPrice={setPrice}
+            showModal={showModal}
+            categories={categories}
+            setCategories={setCategories}
           />
         </div>
       </div>

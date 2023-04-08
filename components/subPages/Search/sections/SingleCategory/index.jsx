@@ -15,6 +15,7 @@ const SingleCategory = ({
   categoryName = '',
   categories,
   setCategories,
+  showModal,
 }) => {
   const [firstFilteredCategory, setFirstFilteredCategory] = useState(
     allCategories[0]
@@ -78,9 +79,11 @@ const SingleCategory = ({
     if (router.query[categoryName] === '') {
       delete router.query[categoryName];
     }
-    router.push({
-      query: router.query,
-    });
+    if (!showModal) {
+      router.push({
+        query: router.query,
+      });
+    }
   };
 
   useEffect(() => {

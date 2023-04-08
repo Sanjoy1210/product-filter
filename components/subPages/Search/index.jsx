@@ -118,6 +118,8 @@ const Search = () => {
         MAX_PRICE={MAX_PRICE}
         price={price}
         setPrice={setPrice}
+        categories={categories}
+        setCategories={setCategories}
         handleClear={handleClear}
       />
     </section>

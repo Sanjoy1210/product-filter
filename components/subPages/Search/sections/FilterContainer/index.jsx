@@ -65,6 +65,7 @@ const FilterContainer = ({
           categoryName={filterKey}
           categories={categories}
           setCategories={setCategories}
+          showModal={showModal}
         />
       ))}
     </div>

@@ -41,7 +41,7 @@ const MileRange = ({ min, max, mile, setMile, showModal }) => {
 
   useEffect(() => {
     setThumbPosition(thumbRef.current);
-  }, []);
+  }, [showModal]);
 
   const handleTooltipPosition = () => {
     if (thumbPosition === null) {

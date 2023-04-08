@@ -14,6 +14,34 @@
   -moz-appearance: textfield;
 }
 
+/* No scrollbar  */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Scroll bar  */
+.sidebar::-webkit-scrollbar {
+  @apply w-[3px];
+}
+
+.sidebar::-webkit-scrollbar-track {
+  @apply bg-[#ddd];
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  @apply cursor-pointer rounded-[7px] bg-primary;
+}
+/* Custom scroll bar Firefox */
+
+.sidebar {
+  @apply overflow-y-auto overflow-x-hidden;
+}
+
 /* .range-slider {
   width: 100%;
   text-align: center;
