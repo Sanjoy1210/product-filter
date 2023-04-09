@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { IoCheckbox } from 'react-icons/io5';
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowRight,
@@ -9,8 +10,6 @@ import {
 const SingleCategory = ({
   title = '',
   subCategories = [],
-  size = 'medium',
-  color = 'indigo',
   allCategories = [],
   categoryName = '',
   categories,
@@ -22,10 +21,6 @@ const SingleCategory = ({
   );
   const [showItem, setShowItem] = useState(false);
   const router = useRouter();
-
-  const sizeClass =
-    size === 'small' ? 'h-4 w-4' : size === 'medium' ? 'h-5 w-5' : 'h-6 w-6';
-  const colorClass = `text-${color}-600`;
 
   const handleItemExpand = () => {
     if (firstFilteredCategory === categoryName) {
@@ -126,18 +121,28 @@ const SingleCategory = ({
         }`}
       >
         {subCategories?.map((category) => (
-          <div key={category?.id} className="flex items-center cursor-pointer">
+          <div
+            key={category?.id}
+            className="flex items-center cursor-pointer relative"
+          >
+            <IoCheckbox
+              className={`absolute top-1 -left-0.5 h-5 w-5 text-primary 2xl:-left-0.5 ${
+                category?.isChecked ? 'block -mt-[3px]' : 'hidden'
+              }`}
+            />
             <input
               type="checkbox"
               id={category?.id}
-              className={`${sizeClass} ${colorClass} rounded border focus:ring-${color}-500 accent-primary border-primary`}
+              className={`mt-0 inline-block h-4 w-4 shrink-0 cursor-pointer appearance-none overflow-hidden rounded border transition-all duration-300 2xl:mt-0.5 ${
+                category?.isChecked ? 'border-0' : `border-primary bg-white`
+              }`}
               name={category?.value}
               checked={category?.isChecked || false}
               onChange={handleCheckboxChange}
             />
             <label
               htmlFor={category?.id}
-              className="ml-2 block text-gray-900 cursor-pointer"
+              className="ml-2 block text-gray-900 cursor-pointer text-sm"
             >
               {category?.name}
             </label>
